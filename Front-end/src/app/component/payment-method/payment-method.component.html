@@ -1,0 +1,28 @@
+<div class="popup-overlay" *ngIf="isVisible">
+    <div class="card">
+      <h2 id="congratulations" class="text-success">Congratulazioni!</h2>
+      <h3 id="title">La tua offerta è stata accettata!</h3>
+      <img [src]="item?.image ? item?.image : '../../../assets/images/placeholder.png'" alt="immagine-articolo">
+      <div class="card-body">
+        <div class="card-title">
+          <h4>{{item?.name}}</h4>
+        </div>
+        <div class="card-text">
+          <p>
+            <strong>Descrizione: </strong>{{item?.description}}
+          </p>
+          <p>
+            <strong>Base d'asta: </strong>{{item?.auctionBase}} €
+          </p>
+          <p>
+            <strong>Data inizio asta: </strong>{{item?.placementDate}}
+          </p>
+        </div>
+        <div class="d-flex justify-content-center">
+          <button class="btn btn-outline-danger me-4" (click)="leavePaymentMethod()">Abbandona</button>
+          <button id="paypal" class="btn me-4" (click)="apriPaginaEsterna()" >Paga con PayPal
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

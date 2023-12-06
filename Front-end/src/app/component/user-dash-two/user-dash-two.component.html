@@ -1,0 +1,173 @@
+<div class="wrapper hammerBox">
+    <!-- Navbar  -->
+    <div id="sidebar">
+        <div id="sidebar-header">
+            <img src="../../../assets/images/logogenbay_white.png" id="logo" alt="logo dell'asta">
+        </div>
+        <ul class="list-unstyled components">
+            <p>MENU</p>
+            <li><a class="links" routerLink="">Home</a></li>
+            <li><a class="links" (click)="ritorna_al_profilo()">Il tuo profilo</a></li>
+            <li><a class="links" (click)="sentOffers()">Offerte inviate</a></li>
+            <div *ngIf="this.userType == 'v'">
+                <li><a class="links" (click)="receivedOffers()">Offerte ricevute</a></li>
+                <li><a class="links" (click)="addNewItem()">Aggiungi un nuovo articolo</a></li>
+                <li><a class="links" (click)="articoliAsta()">I tuoi articoli all'asta</a></li>
+                <li><a class="links" (click)="articoliVenduti()">I tuoi articoli venduti</a></li>
+            </div>
+        </ul>
+    </div>
+        
+    <app-item-form [(isVisible)]="itemFormVisibility" [user]="user" [lander]="lander" (timeToRefresh)="getData()"></app-item-form>
+    <app-item-details [(isVisible)]="itemDetailsVisibility" [(userItem)]="item"></app-item-details>
+
+    <!-- Page content  -->
+    <!-- Articoli all'asta  -->
+    <div class="container-fluid " *ngIf="lander == 'auction'">
+        <h1 class="pageTitle babyBoss" [hidden]="!item_at_auction"><span>Articoli all'asta</span></h1>
+        <h1 class="pageTitle babyBoss" [hidden]="item_at_auction"><span>Non hai articoli all'asta</span></h1>
+        <div class="row">
+            <div *ngFor="let item of items" class="col-xxl-3 col-lg-4 col-md-6 col-sm-12 mt-4" [hidden]="item.state == 'Venduto'">
+                <div class="card">
+                    <img class="card-img-top" [src]="item?.image ? item?.image : '../../../assets/images/placeholder.png'"
+                    alt="Card image cap">
+                    <strong class="cardTitle">{{item.name}}</strong>
+                    <span class="cardTitle">Stato: <span [ngStyle]="{'color': item.state == 'Disponibile' ? 'green' : 'red' }">{{item.state}}</span></span>
+                    <div class="card-body">
+                        <div class="row justify-content-between">
+                            <div class="col-lg-6 col-sm-12 price">
+                                Base asta: {{item.auctionBase}}&nbsp;€
+                            </div>
+                            <div class="col-lg-6 col-sm-12 price">
+                                Offerta corrente: {{item.majorOffer}}&nbsp;€
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12 mt-sm-2">
+                                <button (click)="itemDetails(item)" class="btn btn-outline-warning btn-md articoli_asta_btn">Dettagli</button>
+                            </div>
+                            <div class="col-lg-6 col-md-12 mt-sm-2">
+                                <button (click)="removeItem(item)" class="btn btn-outline-danger btn-md articoli_asta_btn">Rimuovi</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Articoli venduti  -->
+    <div class="container-fluid" *ngIf="lander == 'soldItems'">
+        <h1 class="pageTitle babyBoss" [hidden]="!itemSold"><span>Articoli venduti</span></h1>
+        <h1 class="pageTitle babyBoss" [hidden]="itemSold"><span>Non hai articoli venduti</span></h1>
+        <div class="row">
+            <div *ngFor="let item of items" class="col-xxl-3 col-lg-4 col-md-6 col-sm-12 mt-4" [hidden]="item.state !== 'Venduto'">
+                <div class="card">
+                    <img class="card-img-top" [src]="item?.image ? item?.image : '../../../assets/images/placeholder.png'"
+                    alt="Card image cap">
+                    <strong class="cardTitle">{{item.name}}</strong>
+                    <span class="cardTitle">Stato: <span [ngStyle]="{'color': item.state == 'Disponibile' ? 'green' : 'red' }">{{item.state}}</span></span>
+                    <div class="card-body">
+                        <div class="row justify-content-between">
+                            <div class="col-lg-6 col-sm-12 price">
+                                Base asta: {{item.auctionBase}}&nbsp;€
+                            </div>
+                            <div class="col-lg-6 col-sm-12 price">
+                                Offerta corrente: {{item.majorOffer}}&nbsp;€
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12 mt-sm-2">
+                                <button (click)="itemDetails(item)" class="btn btn-outline-warning btn-md articoli_asta_btn">Dettagli</button>
+                            </div>
+                            <div class="col-lg-6 col-md-12 mt-sm-2">
+                                <button (click)="removeItem(item)" class="btn btn-outline-danger btn-md articoli_asta_btn">Rimuovi</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--OFFERTE INVIATE-->
+    <div class="container-fluid" *ngIf="lander == 'sentOffers'">
+        <h1 class="pageTitle babyBoss" [hidden]="this.offerSent"><span>Non hai inviato nessuna offerta</span></h1>
+        <h1 class="pageTitle babyBoss" [hidden]="!this.offerSent"><span>Le tue offerte inviate</span></h1>
+        <hr>
+        <div *ngFor="let offer of offers">
+
+            <app-payment-method [(isVisible)]="paymentPopupVisibility" [item]="itemOfOffer"></app-payment-method>
+
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <h1 class="display-6">{{offer.item?.name}}</h1>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Data offerta</th>
+                                <th>Base asta</th>
+                                <th>Offerta</th>
+                                <th>Stato</th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td>{{offer.timing}}</td>
+                            <td>{{offer.item?.auctionBase}} €</td>
+                            <td>{{offer.amount}} €</td>
+                            <td><span [ngStyle]="{'color': offer.state == 'In corso' ? 'blue' : (offer.state == 'Rifiutata' ? 'red' : 'green')}">{{offer.state}}</span></td>
+                            <td><button id="pagaOra" class="btn btn-warning btn-md articoli_asta_btn" [disabled]="offer.state == 'Rifiutata' || offer.state == 'In corso'" (click)="paymentPopUpVisibilityFun(offer.item)">
+                                <ng-container *ngIf="offer.state == 'Rifiutata' || offer.state == 'In corso'; else payNow">
+                                    In attesa di conferma
+                                </ng-container>
+                                <ng-template #payNow>
+                                    Paga ora
+                                </ng-template>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--OFFERTE RICEVUTE-->
+    <div class="container-fluid" *ngIf="lander == 'receivedOffers'">
+        <h1 class="pageTitle babyBoss" [hidden]="offerReceived"><span>Non hai ricevuto offerte per i tuoi articoli</span></h1>
+        <h1 class="pageTitle babyBoss" [hidden]="!offerReceived"><span>Le tue offerte ricevute</span></h1>
+        <hr>
+        <div *ngFor="let userItem of user?.items">
+            <div *ngFor="let itemOffer of userItem.offers">
+
+                <div class="jumbotron jumbotron-fluid">
+                    <div class="container">
+                        <h1 class="display-6">{{userItem.name}}</h1>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Data offerta</th>
+                                    <th>Base asta</th>
+                                    <th>Offerta</th>
+                                    <th>Stato</th>
+                                </tr>
+                            </thead>
+                            <tr>
+                                <td>{{itemOffer.timing}}</td>
+                                <td>{{userItem.auctionBase}} €</td>
+                                <td>{{itemOffer.amount}} €</td>
+                                <td><span [ngStyle]="{'color': itemOffer.state == 'In corso' ? 'blue' : (itemOffer.state == 'Rifiutata' ? 'red' : 'green')}">{{itemOffer.state}}</span></td>
+                            </tr>
+                        </table>
+                        <div class="row">
+                            <div class="col-3">
+                                <button *ngIf="itemOffer.state == 'In corso'" (click)="acceptOffer(itemOffer)"  class="btn btn-outline-primary btn-md articoli_asta_btn">Accetta offerta</button>
+                                <button *ngIf="itemOffer.state == 'Accettata'"
+                                class="btn btn-success btn-md articoli_asta_btn" disabled>Offerta Accettata</button>
+                                <button *ngIf="itemOffer.state == 'Rifiutata'"
+                                class="btn btn-danger btn-md articoli_asta_btn" disabled>Offerta Rifiutata</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

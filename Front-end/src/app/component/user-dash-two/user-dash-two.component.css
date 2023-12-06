@@ -1,0 +1,141 @@
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+    
+    
+}
+
+/* navbar */
+#sidebar {
+    position: fixed;
+    max-width: 330px;
+    min-height: 100vh;
+    background-color: #2f3132;
+}
+
+#sidebar-header {
+    padding: 20px;
+    background-color: #1F1F1F;
+    text-align: center;
+    min-height: 110px;
+}
+
+#logo {
+    height: 95px;
+}
+
+a {
+    padding: 20px;
+    font-size: 1.3em;
+    display: block;
+    line-height: 1.5em;
+    text-decoration: none;
+    color: white;
+}
+
+a:hover {
+    color: rgb(216, 216, 216);
+    background: #3e3f40;
+    cursor: pointer;
+}
+
+p {
+    margin-top: 25px;
+    color: #fff;
+    padding: 10px;
+    padding-left: 20px;
+    margin-bottom: 0;
+    font-size: 2em;
+}
+
+/* page content */
+.container-fluid {
+    margin-left: 330px;
+    padding:5%;
+   
+}
+
+.pageTitle {
+    text-align: center;
+    font-size: 3em;
+    margin-top: 10px;
+    margin-bottom: 0;
+    width: 100%;
+}
+
+/* card */
+.card {
+    min-width: 160px;
+}
+
+.card-img-top {
+    height: 250px;
+    min-height: 250px;
+    object-fit: cover;
+}
+
+.cardTitle {
+    text-align: center;
+    margin-top: 5px;
+    font-size: large;
+}
+
+.articoli_asta_btn {
+    width: 100%;
+}
+
+#articoli_venduti_btn {
+    width: 100%;
+}
+
+/* table */
+
+table {
+    width: 100%;
+}
+
+td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* offers */
+
+.jumbotron {
+    background-color: rgb(220, 220, 220);
+    padding: 1%;
+    margin-top: 2%;
+}
+
+td, th {
+    box-sizing: border-box;
+    max-width: 120px;
+}
+
+@media (max-width: 770px) {
+
+    #sidebar{
+        display: none;
+    }
+
+    .container-fluid {
+        margin-left: 0;
+    }
+}
+
+.hammerBox{
+    background-image: url('src\assets\images\sfondoBody.png'); /* Sostituisci con il percorso del tuo pattern */
+    background-repeat: repeat;
+}
+
+.babyBoss {
+    font-family: 'Roboto', sans-serif !important; /* Usa il font Roboto */
+    font-size: 4em  !important; /* Ingrandisci il font a tuo piacimento */
+    font-weight: bold  !important; /* Rendi il testo grassetto */
+    
+  }
+
+span{
+    background-color:rgba(255, 255, 255, 0.65);
+}

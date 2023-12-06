@@ -1,0 +1,89 @@
+<div id="dettagli_profilo" *ngIf="isVisible">
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Tipologia profilo</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{user?.profileType == 'v' ? 'Venditore' : 'Acquirente'}}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Data di iscrizione</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{user?.entryDate}}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Nome e cognome</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{user?.name}} {{user?.lastname}}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Nickname</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{user?.nickname}}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Email</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{user?.mail}}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Codice fiscale</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{user?.taxcode}}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Indirizzo di residenza</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">
+                        {{user?.homeAddress?.street}}
+                        {{user?.homeAddress?.civic}}
+                        {{user?.homeAddress?.cap}}
+                        {{user?.homeAddress?.town}}
+                        {{user?.homeAddress?.province}}
+                    </p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Indirizzo di spedizione</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">
+                        {{user?.shippingAddress?.street}}
+                        {{user?.shippingAddress?.civic}}
+                        {{user?.shippingAddress?.cap}}
+                        {{user?.shippingAddress?.town}}
+                        {{user?.shippingAddress?.province}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+<div *ngIf="isVisible" class="popup-overlay">
+    <div class="card">
+        <img class="card-img-top item-image" src="https://media.giphy.com/media/7mnURV4kvBhQbaBWhv/giphy.gif">
+        <div class="card-body">
+            <div class="row">
+                <span id="title">Fai un'offerta per questo articolo!</span>
+            </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <strong>Base d'asta: </strong>{{item?.auctionBase}} €
+                </div>
+                <div class="col">
+                    <strong>Offerta attuale: </strong>{{item?.majorOffer}} €
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-4">
+                    <strong>La tua offerta: </strong>
+                </div>
+                <div class="col">
+                    <form #f="ngForm" (submit)="formManager(f)">
+                        <div class="form-group">
+                            <input [attr.min]="minOffer" [ngModel] type="number" name="offerAmount" class="form-control" required [(ngModel)]="inputValue" (change)="checkOfferValue()">
+                            <div [hidden]="!inputError" class="alert alert-danger">L'offerta minima deve essere superiore alla base d'asta e all'offerta maggiore ricevuta</div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-6">
+                    <button class="btn btn-outline-danger" (click)="leaveOfferPopup(f)">Abbandona</button>
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-outline-success" (click)="formManager(f)" [disabled]="inputError">Invia offerta</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
